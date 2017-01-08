@@ -43,7 +43,7 @@ public class Running
                 update();
             	}
         	};
-        	time = new Timer(1000 / 30 /* frame rate */, al);
+        	time = new Timer(1000 / 120 /* frame rat*/, al);
         	time.start();
     }
     public void Init()
@@ -108,9 +108,8 @@ public class Running
                      g.drawImage(imgAray[14], (int) locations[14].getX() , (int) locations[14].getY(), imgAray[14].getWidth(), imgAray[14].getHeight(), this);
                      g.drawImage(imgAray[15], (int) locations[15].getX() , (int) locations[15].getY(), imgAray[15].getWidth(), imgAray[15].getHeight(), this);
 
-                     g.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getImage().getHeight() / 4, ball.getImage().getWidth() /4 , this);
-                     ball.setLocX(ball.getX() + 1);
-                     ball.setLocY(ball.getY() + 1);
+                    g.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getImage().getWidth() / 8, ball.getImage().getHeight() /8 , this);
+
                  }
     		};
 

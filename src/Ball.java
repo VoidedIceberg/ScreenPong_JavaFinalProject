@@ -1,5 +1,7 @@
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,13 +18,19 @@ import javax.swing.JComponent;
 
 public class Ball extends JComponent
 	{
+	
+		private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		boolean phisicsEnabled = false;
 		int ballSpeed;
 		BufferedImage  ballImg;
 		
 
-		private int locX = 0;
-		private int locY = 0;
+		private int locX = 1;
+		private int locY = 1;
+		private int speed = 5;
+		private int directionX = 1;
+		private int directionY = 1;
+
 		private int screenHight;
 		private int screenWidth;
 		
@@ -43,15 +51,18 @@ public class Ball extends JComponent
 	}
 	public void phisics()
 	{
-		if (locX <= screenHight)
+		if (locX > screenSize.getWidth() - (ballImg.getWidth() / 8) || locX <= 0)
 		{
-			locX = locX + 1;
+			directionX = -directionX;
 		}
-		if (locY <= screenWidth)
+		if (locY > screenSize.getHeight() - (ballImg.getHeight() / 8) || locY <= 0)
 		{
-			locY = locY - 1;
+			directionY = -directionY;
 		}
-		
+		locX = (speed *(directionX * 4)) + locX;
+		locY = (speed *(directionY * 4)) + locY;
+
+
 	}
 	public boolean isTouching()
 	{
