@@ -20,6 +20,7 @@ public class Ball extends JComponent
 		int ballSpeed;
 		BufferedImage  ballImg;
 		
+
 		private int locX = 0;
 		private int locY = 0;
 		private int screenHight;
@@ -78,6 +79,13 @@ public class Ball extends JComponent
 	public int getY()
 	{
 		return this.locY;
+	}
+	public void setLocX(int locX) {
+		this.locX = locX;
+	}
+
+	public void setLocY(int locY) {
+		this.locY = locY;
 	}
 	
 }

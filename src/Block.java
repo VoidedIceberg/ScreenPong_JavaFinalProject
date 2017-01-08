@@ -70,18 +70,19 @@ import javax.tools.DocumentationTool.Location;
 	{
 		System.out.println("testing");
 
-		
 		for (int i = 0; i <=  imgAray.length -1; i++ )
 		{
-			if (i != rows)
+			if (i % 4 != 0 || i == 0)
 			{
 				location[i].setLocation( preWidth, preHight );
 				preWidth = preWidth + imgAray[0].getWidth();
 			}
-			if ( i % 4 == 0 && i != 0)
+			else if ( i % 4 == 0 && i != 0)
 			{
 				preHight =  preHight + imgAray[0].getHeight();
 			    location[i].setLocation( 0, preHight );
+				preWidth =  imgAray[0].getWidth();
+
 			}
 		}
 
