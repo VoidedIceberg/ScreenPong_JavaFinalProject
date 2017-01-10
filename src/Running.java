@@ -122,7 +122,11 @@ public class Running
 //    	}
     	
         frame.add(panel);
-
+        
+        if (ball.getBounds().intersects(locations[6].x, locations[6].y, imgAray[6].getWidth(), imgAray[6].getHeight()));
+        {
+        	imgAray[0] = imgAray[1];
+        }
     	// gets the current screens resolution
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
@@ -130,7 +134,8 @@ public class Running
         // makes the window Full Screen
         gs.setFullScreenWindow(frame);
         frame.validate();
-
+        
+    
             
             win();
 //        }
