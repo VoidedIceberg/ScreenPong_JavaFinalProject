@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -18,7 +19,7 @@ import javax.swing.Timer;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Running 
+public class Running extends JPanel
 {
     private boolean isRunning;
     private BufferedImage screen = null;
@@ -27,14 +28,16 @@ public class Running
     private Timer time;
     private Ball ball;
 	private Point[] locations;
-    
-    private ScreenCap screenCap;
     private Slicer slicer;
+    private ScreenCap screenCap;
     private Block block;
     private JPanel panel;
     
+    private Block[] blockAray;
+    
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
+    // sets the frame rate of the game
     public Running()
     {
     	ActionListener al = new ActionListener() {
@@ -43,9 +46,11 @@ public class Running
                 update();
             	}
         	};
-        	time = new Timer(1000 / 120 /* frame rat*/, al);
+        	time = new Timer(1000 / 30 /* frame rat*/, al);
         	time.start();
     }
+
+    //Initilizes all of my varibles and objects used
     public void Init()
     {
         isRunning = true;
@@ -53,31 +58,33 @@ public class Running
         screenCap = new ScreenCap();
         slicer = new Slicer();
 	    
+        slicer = new Slicer();
+		screenCap = new ScreenCap();
+        
         try
         {
          screen = screenCap.capScreen();
-         
+	     imgAray = slicer.slice(screen);
          frame = new JFrame("Screen Window");
          frame.setUndecorated(true);
          
          ball = new Ball(screenSize.height, screenSize.width);
-         block = new Block();
 
          
         } catch (Exception e) {
 			e.printStackTrace();
         }
+        blockAray = new Block[imgAray.length];
         
-        block.populateLocations();
-        locations = block.getLocationPoint();
-        imgAray = block.getImgAray();
-
+        for (int i = 0; i <= imgAray.length - 1; i++)
+        {
+        	System.out.println(i);
+        	blockAray[i] = new Block(i, imgAray[i], imgAray);
+        }
+        
         update();
         
     }
-    
-
-	private int index = 0;
 
     public void update()
     {
@@ -85,56 +92,40 @@ public class Running
 //        {
     	
     	ball.phisics();
-//    	for(int i = imgAray.length; i >= 0; i--)
-//    	{
-    		panel = new JPanel(){
-                 @Override
-                 public void paint(Graphics g) {
-                     super.paint(g);
-                     g.drawImage(imgAray[0], (int) locations[0].getX() , (int) locations[0].getY(), imgAray[0].getWidth(), imgAray[0].getHeight(), this);
-                     g.drawImage(imgAray[1], (int) locations[1].getX() , (int) locations[1].getY(), imgAray[1].getWidth(), imgAray[1].getHeight(), this);
-                     g.drawImage(imgAray[2], (int) locations[2].getX() , (int) locations[2].getY(), imgAray[2].getWidth(), imgAray[2].getHeight(), this);
-                     g.drawImage(imgAray[3], (int) locations[3].getX() , (int) locations[3].getY(), imgAray[3].getWidth(), imgAray[3].getHeight(), this);
-                     g.drawImage(imgAray[4], (int) locations[4].getX() , (int) locations[4].getY(), imgAray[4].getWidth(), imgAray[4].getHeight(), this);
-                     g.drawImage(imgAray[5], (int) locations[5].getX() , (int) locations[5].getY(), imgAray[5].getWidth(), imgAray[5].getHeight(), this);
-                     g.drawImage(imgAray[6], (int) locations[6].getX() , (int) locations[6].getY(), imgAray[6].getWidth(), imgAray[6].getHeight(), this);
-                     g.drawImage(imgAray[7], (int) locations[7].getX() , (int) locations[7].getY(), imgAray[7].getWidth(), imgAray[7].getHeight(), this);
-                     g.drawImage(imgAray[8], (int) locations[8].getX() , (int) locations[8].getY(), imgAray[8].getWidth(), imgAray[8].getHeight(), this);
-                     g.drawImage(imgAray[9], (int) locations[9].getX() , (int) locations[9].getY(), imgAray[9].getWidth(), imgAray[9].getHeight(), this);
-                     g.drawImage(imgAray[10], (int) locations[10].getX() , (int) locations[10].getY(), imgAray[10].getWidth(), imgAray[10].getHeight(), this);
-                     g.drawImage(imgAray[11], (int) locations[11].getX() , (int) locations[11].getY(), imgAray[11].getWidth(), imgAray[11].getHeight(), this);
-                     g.drawImage(imgAray[12], (int) locations[12].getX() , (int) locations[12].getY(), imgAray[12].getWidth(), imgAray[12].getHeight(), this);
-                     g.drawImage(imgAray[13], (int) locations[13].getX() , (int) locations[13].getY(), imgAray[13].getWidth(), imgAray[13].getHeight(), this);
-                     g.drawImage(imgAray[14], (int) locations[14].getX() , (int) locations[14].getY(), imgAray[14].getWidth(), imgAray[14].getHeight(), this);
-                     g.drawImage(imgAray[15], (int) locations[15].getX() , (int) locations[15].getY(), imgAray[15].getWidth(), imgAray[15].getHeight(), this);
 
+    		panel = new JPanel(){
+    			 @Override
+                 public void paintComponent(Graphics g) {
+//                     super.paint(g);
+                     super.paintComponent(g);
+                     Graphics2D g2d = (Graphics2D) g.create();
+                 	for(int i = 0; i <= imgAray.length - 1; i++)
+                	{
+                 		g.drawImage(blockAray[i].getImg(), blockAray[i].getLocationPoint().x, blockAray[i].getLocationPoint().y, blockAray[i].getImg().getWidth(),blockAray[i].getImg().getHeight(), this);
+                	}
                     g.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getImage().getWidth() / 8, ball.getImage().getHeight() /8 , this);
 
                  }
     		};
-
-//             if (index == 15)
-//             {
-//            	 index = 0;
-//             }
-//             else{index++;}
-//              
-//    	}
-    	
+        
         frame.add(panel);
         
-        if (ball.getBounds().intersects(locations[6].x, locations[6].y, imgAray[6].getWidth(), imgAray[6].getHeight()));
-        {
-        	imgAray[0] = imgAray[1];
-        }
-    	// gets the current screens resolution
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+ 
+    		// gets the current screens resolution
+        	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         
         // makes the window Full Screen
         gs.setFullScreenWindow(frame);
         frame.validate();
         
+        for(int i = 0; i <= imgAray.length - 1; i++){
+            if (blockAray[i].contains(ball.getLocation()))
+            {
+            	System.out.println(i);
+            }
+        }
+
     
             
             win();
@@ -156,8 +147,7 @@ public class Running
     {
     	frame.dispose();
     }
-    public BufferedImage[] getImgArray()
-    {
-    	return imgAray;
-    }
+	public BufferedImage[] getImgAray() {
+		return imgAray;
+	}
 }

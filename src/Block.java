@@ -17,84 +17,68 @@ import javax.tools.DocumentationTool.Location;
  */
 	public class Block extends JComponent
 	{
-	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	
-	private int screenHight;
-	private int screenWidth;
-	private int indexNum;
-	private int rows;
-	private int cols;
-	
-	private BufferedImage[] imgAray;;
 
-
+	private int index;	
+	
+	
 	private Point[] location;
-	private boolean[] hasBeenHit;
-	
-    private Slicer slicer;
-    private ScreenCap screenCap;
-    private BufferedImage screen;
+	private BufferedImage img;
+	private Point imgLocation;
+	private BufferedImage[] imgAray;
 
-	public Block() 
-	{
-		screenHight= screenSize.height;
-		screenWidth  = screenSize.width;
-		
-
-		slicer = new Slicer();
-		screenCap = new ScreenCap();
-			
-        try {
-			screen = screenCap.capScreen();
-	        imgAray = slicer.slice(screen);
-
-		} catch (AWTException | IOException e) {
-			e.printStackTrace();
-		}
-        
-		rows = slicer.getRows();
-		cols = slicer.getCols();
+	public Block(int index, BufferedImage imgA, BufferedImage[] imgAray) 
+	{		
+		this.index = index;
+		this.imgAray = imgAray;
+		img = imgA;
+		imgLocation = new Point();
 		
 		location = new Point[imgAray.length];
 		for(int i = 0; i < location.length; i++) {
 		    location[i] = new Point();
 		}
+		populateLocations();
 		
-        indexNum = 0;
+		imgLocation = location[index];
 	}
 	
+
+
 	private int preWidth = 0;
 	private int preHight = 0;
 	
 	public void populateLocations()
 	{
-		System.out.println("testing");
-
-		for (int i = 0; i <=  imgAray.length -1; i++ )
+		for (int i = 0; i <= imgAray.length - 1; i++ )
 		{
 			if (i % 4 != 0 || i == 0)
 			{
 				location[i].setLocation( preWidth, preHight );
-				preWidth = preWidth + imgAray[0].getWidth();
+				preWidth = preWidth + img.getWidth();
 			}
 			else if ( i % 4 == 0 && i != 0)
 			{
-				preHight =  preHight + imgAray[0].getHeight();
+				preHight =  preHight + img.getHeight();
 			    location[i].setLocation( 0, preHight );
-				preWidth =  imgAray[0].getWidth();
+				preWidth =  img.getWidth();
 
 			}
 		}
 
 		
 	}
-	public Point[] getLocationPoint() {
-		return location;
+
+	public Point getLocationPoint() {
+		return imgLocation;
 	}
-	public BufferedImage[] getImgAray() {
-		return imgAray;
+	public BufferedImage getImg() {
+		return img;
 	}
-	
-	
-	
+	public void setImg(BufferedImage img) {
+		this.img = img;
+	}
+	public void setImgLocation(Point imgLocation) {
+		this.imgLocation = imgLocation;
+	}
+
 }
