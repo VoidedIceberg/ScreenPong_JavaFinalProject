@@ -40,6 +40,8 @@ import javax.tools.DocumentationTool.Location;
 		populateLocations();
 		
 		imgLocation = location[index];
+		
+		this.setBounds(imgLocation.x, imgLocation.y, img.getWidth(), img.getHeight());
 	}
 	
 
@@ -71,6 +73,10 @@ import javax.tools.DocumentationTool.Location;
 	public Point getLocationPoint() {
 		return imgLocation;
 	}
+	public void setLocation(Point[] location) {
+		this.location = location;
+	}
+
 	public BufferedImage getImg() {
 		return img;
 	}

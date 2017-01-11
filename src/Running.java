@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import org.omg.CORBA.Bounds;
 
 /**
  * Write a description of class Runing here.
@@ -35,6 +38,9 @@ public class Running extends JPanel
     
     private Block[] blockAray;
     
+    private Rectangle rect1;
+    private Rectangle rect2;
+    
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
     // sets the frame rate of the game
@@ -46,7 +52,7 @@ public class Running extends JPanel
                 update();
             	}
         	};
-        	time = new Timer(1000 / 30 /* frame rat*/, al);
+        	time = new Timer(1000 / 1 /* frame rat*/, al);
         	time.start();
     }
 
@@ -78,7 +84,6 @@ public class Running extends JPanel
         
         for (int i = 0; i <= imgAray.length - 1; i++)
         {
-        	System.out.println(i);
         	blockAray[i] = new Block(i, imgAray[i], imgAray);
         }
         
@@ -120,10 +125,16 @@ public class Running extends JPanel
         frame.validate();
         
         for(int i = 0; i <= imgAray.length - 1; i++){
-            if (blockAray[i].contains(ball.getLocation()))
-            {
-            	System.out.println(i);
-            }
+        
+        	rect1 = ball.getBounds();
+        	rect2 = blockAray[i].getBounds();
+        	
+        	if (rect1.intersects(rect2))
+        	{
+        		System.out.println(i);
+        		blockAray[i].setImg(blockAray[0].getImg());;
+        	}
+            
         }
 
     

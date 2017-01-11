@@ -48,6 +48,8 @@ public class Ball extends JComponent
 			ballImg = ImageIO.read(new File("images/BallImage.png"));
 			} catch (IOException e) {
 			}
+			
+			this.setBounds(locX, locY, ballImg.getWidth() / 8, ballImg.getHeight() / 8);
 		}
 		
 		public boolean phisicsEnabled()
