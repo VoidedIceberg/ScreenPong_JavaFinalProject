@@ -1,17 +1,12 @@
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JComponent;
 
 /**
@@ -30,8 +25,9 @@ public class Ball extends JComponent
 		BufferedImage  ballImg;
 		
 
-		private int locX = 1;
-		private int locY = 1;
+		private int locX = (int) (screenSize.getWidth() / 2);
+		private int locY = (int) (screenSize.getHeight() / 2 + 350);
+		
 		private int speed = 5;
 		private int directionX = 1;
 		private int directionY = 1;
@@ -39,17 +35,19 @@ public class Ball extends JComponent
 		private int screenHight;
 		private int screenWidth;
 		
+		private Rectangle rect;
+		
 		public Ball(int screenX, int screenY)
 		{
 			screenHight = screenX;
 			screenWidth = screenY;
 			
 			try {
-			ballImg = ImageIO.read(new File("images/BallImage.png"));
+			ballImg = ImageIO.read(new File("images/newball.png"));
 			} catch (IOException e) {
 			}
-			
-			this.setBounds(locX, locY, ballImg.getWidth() / 8, ballImg.getHeight() / 8);
+			rect = new Rectangle();
+
 		}
 		
 		public boolean phisicsEnabled()
@@ -70,6 +68,8 @@ public class Ball extends JComponent
 		locX = (speed *(directionX * 4)) + locX;
 		locY = (speed *(directionY * 4)) + locY;
 
+		rect.setBounds(locX, locY, ballImg.getWidth(), ballImg.getHeight());	
+		this.setBounds(rect);
 
 	}
 	public boolean isTouching()
@@ -105,6 +105,26 @@ public class Ball extends JComponent
 
 	public void setLocY(int locY) {
 		this.locY = locY;
+	}
+
+	public Rectangle getRect() {
+		return rect;
+	}
+
+	public int getDirectionX() {
+		return directionX;
+	}
+
+	public void setDirectionX(int directionX) {
+		this.directionX = directionX;
+	}
+
+	public int getDirectionY() {
+		return directionY;
+	}
+
+	public void setDirectionY(int directionY) {
+		this.directionY = directionY;
 	}
 
 }

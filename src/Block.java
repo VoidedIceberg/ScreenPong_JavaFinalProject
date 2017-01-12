@@ -1,13 +1,8 @@
-import java.awt.AWTException;
-import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.swing.JComponent;
-import javax.tools.DocumentationTool.Location;
 
 /**
  * Write a description of class Block here.
@@ -25,6 +20,8 @@ import javax.tools.DocumentationTool.Location;
 	private BufferedImage img;
 	private Point imgLocation;
 	private BufferedImage[] imgAray;
+	private Rectangle rect;
+	private Boolean destroyed;
 
 	public Block(int index, BufferedImage imgA, BufferedImage[] imgAray) 
 	{		
@@ -41,7 +38,12 @@ import javax.tools.DocumentationTool.Location;
 		
 		imgLocation = location[index];
 		
-		this.setBounds(imgLocation.x, imgLocation.y, img.getWidth(), img.getHeight());
+		rect = new Rectangle();
+		
+		rect.setBounds(imgLocation.x, imgLocation.y, img.getWidth(), img.getHeight());
+		
+		this.setBounds(rect);
+		destroyed = false;
 	}
 	
 
@@ -85,6 +87,18 @@ import javax.tools.DocumentationTool.Location;
 	}
 	public void setImgLocation(Point imgLocation) {
 		this.imgLocation = imgLocation;
+	}
+
+	public Rectangle getRect() {
+		return rect;
+	}
+
+	public Boolean getDestroyed() {
+		return destroyed;
+	}
+
+	public void setDestroyed(Boolean destroyed) {
+		this.destroyed = destroyed;
 	}
 
 }

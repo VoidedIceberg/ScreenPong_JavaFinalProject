@@ -3,18 +3,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
-import org.omg.CORBA.Bounds;
 
 /**
  * Write a description of class Runing here.
@@ -30,16 +31,11 @@ public class Running extends JPanel
     private JFrame frame = null;
     private Timer time;
     private Ball ball;
-	private Point[] locations;
     private Slicer slicer;
     private ScreenCap screenCap;
-    private Block block;
     private JPanel panel;
-    
+    private Paddle paddle;
     private Block[] blockAray;
-    
-    private Rectangle rect1;
-    private Rectangle rect2;
     
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -52,7 +48,7 @@ public class Running extends JPanel
                 update();
             	}
         	};
-        	time = new Timer(1000 / 1 /* frame rat*/, al);
+        	time = new Timer(1000 / 30 /* frame rat*/, al);
         	time.start();
     }
 
@@ -86,6 +82,8 @@ public class Running extends JPanel
         {
         	blockAray[i] = new Block(i, imgAray[i], imgAray);
         }
+        paddle = new Paddle();
+        
         
         update();
         
@@ -93,9 +91,6 @@ public class Running extends JPanel
 
     public void update()
     {
-//        while(isRunning == true)
-//        {
-    	
     	ball.phisics();
 
     		panel = new JPanel(){
@@ -104,12 +99,19 @@ public class Running extends JPanel
 //                     super.paint(g);
                      super.paintComponent(g);
                      Graphics2D g2d = (Graphics2D) g.create();
-                 	for(int i = 0; i <= imgAray.length - 1; i++)
+                 	for(int i = 0; i <= 7; i++)
                 	{
+                 		if (blockAray[i].getDestroyed() == false)
+                 		{
                  		g.drawImage(blockAray[i].getImg(), blockAray[i].getLocationPoint().x, blockAray[i].getLocationPoint().y, blockAray[i].getImg().getWidth(),blockAray[i].getImg().getHeight(), this);
+                 		}
                 	}
+                 	for (int i = 8; i <= 15; i++)
+                 	{
+                 		g.drawImage(blockAray[i].getImg(), blockAray[i].getLocationPoint().x, blockAray[i].getLocationPoint().y, blockAray[i].getImg().getWidth(),blockAray[i].getImg().getHeight(), this);
+                 	}
                     g.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getImage().getWidth() / 8, ball.getImage().getHeight() /8 , this);
-
+             		g.drawImage(paddle.getPaddleImg(), paddle.getLocX(), paddle.getLocY(), paddle.getPaddleImg().getWidth(),paddle.getPaddleImg().getHeight(), this);
                  }
     		};
         
@@ -124,41 +126,58 @@ public class Running extends JPanel
         gs.setFullScreenWindow(frame);
         frame.validate();
         
-        for(int i = 0; i <= imgAray.length - 1; i++){
-        
-        	rect1 = ball.getBounds();
-        	rect2 = blockAray[i].getBounds();
-        	
-        	if (rect1.intersects(rect2))
-        	{
-        		System.out.println(i);
-        		blockAray[i].setImg(blockAray[0].getImg());;
-        	}
-            
-        }
-
-    
-            
+        checkCollision();
             win();
-//        }
     }
+
+
     public void win()
     {
-         if (isRunning == true)
-         {
+    	int j = 0;
+//        if (ball.getRect().getMaxY() > screenSize.getHeight()) {
+//            end();
+//        }
+       for(int i = 0; i <= 7; i++)
+       {
+    	   if (blockAray[i].getDestroyed() == true)
+    	   {
+    		   j++;
+    	   }
+    	   if(j == 8)
+    	   {
+    		   end();
+    	   }
+       }
 
-            
-         }
-         else{
-        	 isRunning = false;
-        	 end();
-         }
+    }
+    private void checkCollision() {
+
+//        if (ball.getRect().getMaxY() < frame.getHeight()) {
+//            end();
+//        }
+    	for (int i = 0; i <= imgAray.length - 1; i++)
+    	{
+        if ((ball.getBounds()).intersects(blockAray[i].getBounds()))
+        {
+        	if (blockAray[i].getDestroyed() == false)
+        	{
+        	ball.setDirectionX(-(ball.getDirectionX()));
+        	ball.setDirectionY(-(ball.getDirectionY()));
+        	}
+        	blockAray[i].setDestroyed(true);
+
+        }
+    	}
+
     }
     public void end()
     {
+    	time.stop();
     	frame.dispose();
+    	
     }
 	public BufferedImage[] getImgAray() {
 		return imgAray;
 	}
 }
+
