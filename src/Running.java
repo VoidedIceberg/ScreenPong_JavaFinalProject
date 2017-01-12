@@ -125,7 +125,7 @@ public class Running extends JPanel
         // makes the window Full Screen
         gs.setFullScreenWindow(frame);
         frame.validate();
-        
+        paddle.move(frame);
         checkCollision();
             win();
     }
@@ -165,10 +165,14 @@ public class Running extends JPanel
         	ball.setDirectionY(-(ball.getDirectionY()));
         	}
         	blockAray[i].setDestroyed(true);
-
-        }
+        }      
     	}
-
+    	
+    	if (ball.getBounds().intersects(paddle.getBounds()))
+    	{
+//        	ball.setDirectionX(-(ball.getDirectionX()));
+        	ball.setDirectionY(-(ball.getDirectionY()));
+    	}
     }
     public void end()
     {
