@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 public class Paddle extends JComponent{
@@ -100,7 +99,6 @@ public class Paddle extends JComponent{
     }
 
     private void resetState() {
-
         locX = 500;
         locY = 980;
         

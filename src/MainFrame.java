@@ -44,7 +44,6 @@ public class MainFrame
             public void actionPerformed(ActionEvent arg0) {
                 try{                  
                        Running run = new Running();
-                       run.Init();
                 } catch (Exception e) {
         			e.printStackTrace();
                 }

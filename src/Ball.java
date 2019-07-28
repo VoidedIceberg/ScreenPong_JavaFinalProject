@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,48 +13,30 @@ import javax.swing.JComponent;
 /**
  * Write a description of class Ball here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author T. Mullenberg 
  */
-
 public class Ball extends JComponent
 	{
-	
 		private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		boolean phisicsEnabled = false;
 		int ballSpeed;
 		BufferedImage  ballImg;
-		
 
 		private int locX = (int) (screenSize.getWidth() / 2);
 		private int locY = (int) (screenSize.getHeight() / 2 + 350);
-		
 		private int speed = 5;
 		private int directionX = 1;
 		private int directionY = 1;
-
-		private int screenHight;
-		private int screenWidth;
 		
 		private Rectangle rect;
 		
-		public Ball(int screenX, int screenY)
-		{
-			screenHight = screenX;
-			screenWidth = screenY;
-			
-			try {
-			ballImg = ImageIO.read(new File("images/newball.png"));
-			} catch (IOException e) {
-			}
+	public Ball()
+	{	
+		try {
+			ballImg = ImageIO.read(new File("images/BallImage.png"));
+		} catch (IOException e) { }
 			rect = new Rectangle();
-
-		}
-		
-		public boolean phisicsEnabled()
-	{
-		return false;
 	}
+
 	public void phisics()
 	{
 		if (locX > screenSize.getWidth() - (ballImg.getWidth() / 8) || locX <= 0)
@@ -63,30 +46,18 @@ public class Ball extends JComponent
 		if (locY > screenSize.getHeight() - (ballImg.getHeight() / 8) || locY <= 0)
 		{
 			directionY = -directionY;
-
 		}
 		locX = (speed *(directionX * 4)) + locX;
 		locY = (speed *(directionY * 4)) + locY;
 
 		rect.setBounds(locX, locY, ballImg.getWidth(), ballImg.getHeight());	
 		this.setBounds(rect);
-
 	}
 	public boolean isTouching()
-	{
-		
+	{		
 		return false;
 	}
-	public void destroy()
-	{
-		
-		
-	}
-	public void add(Frame frame)
-	{
-		
-		
-	}
+
 	public BufferedImage getImage()
 	{
 		return ballImg;
@@ -126,5 +97,4 @@ public class Ball extends JComponent
 	public void setDirectionY(int directionY) {
 		this.directionY = directionY;
 	}
-
 }

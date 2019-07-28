@@ -3,14 +3,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -25,7 +20,6 @@ import javax.swing.Timer;
  */
 public class Running extends JPanel
 {
-    private boolean isRunning;
     private BufferedImage screen = null;
     private BufferedImage[] imgAray;
     private JFrame frame = null;
@@ -42,27 +36,22 @@ public class Running extends JPanel
     // sets the frame rate of the game
     public Running()
     {
+        Init();
     	ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                update();
+                    update();
             	}
         	};
         	time = new Timer(1000 / 30 /* frame rat*/, al);
         	time.start();
     }
 
-    //Initilizes all of my varibles and objects used
     public void Init()
-    {
-        isRunning = true;
-   
+    {   
         screenCap = new ScreenCap();
         slicer = new Slicer();
-	    
-        slicer = new Slicer();
-		screenCap = new ScreenCap();
-        
+
         try
         {
          screen = screenCap.capScreen();
@@ -70,9 +59,7 @@ public class Running extends JPanel
          frame = new JFrame("Screen Window");
          frame.setUndecorated(true);
          
-         ball = new Ball(screenSize.height, screenSize.width);
-
-         
+         ball = new Ball();
         } catch (Exception e) {
 			e.printStackTrace();
         }
@@ -84,9 +71,7 @@ public class Running extends JPanel
         }
         paddle = new Paddle();
         
-        
         update();
-        
     }
 
     public void update()
@@ -96,7 +81,6 @@ public class Running extends JPanel
     		panel = new JPanel(){
     			 @Override
                  public void paintComponent(Graphics g) {
-//                     super.paint(g);
                      super.paintComponent(g);
                      Graphics2D g2d = (Graphics2D) g.create();
                  	for(int i = 0; i <= 7; i++)
@@ -113,11 +97,8 @@ public class Running extends JPanel
                     g.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getImage().getWidth() / 8, ball.getImage().getHeight() /8 , this);
              		g.drawImage(paddle.getPaddleImg(), paddle.getLocX(), paddle.getLocY(), paddle.getPaddleImg().getWidth(),paddle.getPaddleImg().getHeight(), this);
                  }
-    		};
-        
+    		};     
         frame.add(panel);
-        
- 
     		// gets the current screens resolution
         	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
@@ -134,16 +115,13 @@ public class Running extends JPanel
     public void win()
     {
     	int j = 0;
-//        if (ball.getRect().getMaxY() > screenSize.getHeight()) {
-//            end();
-//        }
        for(int i = 0; i <= 7; i++)
        {
     	   if (blockAray[i].getDestroyed() == true)
     	   {
     		   j++;
     	   }
-    	   if(j == 8)
+    	   if(j == blockAray.length)
     	   {
     		   end();
     	   }
@@ -151,10 +129,6 @@ public class Running extends JPanel
 
     }
     private void checkCollision() {
-
-//        if (ball.getRect().getMaxY() < frame.getHeight()) {
-//            end();
-//        }
     	for (int i = 0; i <= imgAray.length - 1; i++)
     	{
         if ((ball.getBounds()).intersects(blockAray[i].getBounds()))
@@ -170,7 +144,7 @@ public class Running extends JPanel
     	
     	if (ball.getBounds().intersects(paddle.getBounds()))
     	{
-//        	ball.setDirectionX(-(ball.getDirectionX()));
+       	// ball.setDirectionX(-(ball.getDirectionX()));
         	ball.setDirectionY(-(ball.getDirectionY()));
     	}
     }
