@@ -5,22 +5,23 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 
 /**
- *  	Creates the attributes of the breakable blocks
+ * Write a description of class Block here.
  * 
- * @author Troy Mullenberg
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 	public class Block extends JComponent
 	{
-		private int index;	
-		private Point[] location;
-		private BufferedImage img;
-		private Point imgLocation;
-		private BufferedImage[] imgAray;
-		private Rectangle rect;
-		private Boolean destroyed;
 
-		private int preWidth = 0;
-		private int preHight = 0;
+	private int index;	
+	
+	
+	private Point[] location;
+	private BufferedImage img;
+	private Point imgLocation;
+	private BufferedImage[] imgAray;
+	private Rectangle rect;
+	private Boolean destroyed;
 
 	public Block(int index, BufferedImage imgA, BufferedImage[] imgAray) 
 	{		
@@ -30,8 +31,7 @@ import javax.swing.JComponent;
 		imgLocation = new Point();
 		
 		location = new Point[imgAray.length];
-		for(int i = 0; i < location.length; i++) 
-		{
+		for(int i = 0; i < location.length; i++) {
 		    location[i] = new Point();
 		}
 		populateLocations();
@@ -45,7 +45,12 @@ import javax.swing.JComponent;
 		this.setBounds(rect);
 		destroyed = false;
 	}
-		
+	
+
+
+	private int preWidth = 0;
+	private int preHight = 0;
+	
 	public void populateLocations()
 	{
 		for (int i = 0; i <= imgAray.length - 1; i++ )
@@ -60,42 +65,35 @@ import javax.swing.JComponent;
 				preHight =  preHight + img.getHeight();
 			    location[i].setLocation( 0, preHight );
 				preWidth =  img.getWidth();
+
 			}
 		}
+
+		
 	}
 
-	public Point getLocationPoint() 
-	{
+	public Point getLocationPoint() {
 		return imgLocation;
 	}
-
-	public void setLocation(Point[] location) 
-	{
+	public void setLocation(Point[] location) {
 		this.location = location;
 	}
 
-	public BufferedImage getImg() 
-	{
+	public BufferedImage getImg() {
 		return img;
 	}
-
-	public void setImg(BufferedImage img) 
-	{
+	public void setImg(BufferedImage img) {
 		this.img = img;
 	}
-
-	public void setImgLocation(Point imgLocation) 
-	{
+	public void setImgLocation(Point imgLocation) {
 		this.imgLocation = imgLocation;
 	}
 
-	public Rectangle getRect() 
-	{
+	public Rectangle getRect() {
 		return rect;
 	}
 
-	public Boolean getDestroyed() 
-	{
+	public Boolean getDestroyed() {
 		return destroyed;
 	}
 
