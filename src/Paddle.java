@@ -17,7 +17,6 @@ public class Paddle extends JComponent{
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private BufferedImage  paddleImg;
 	
-
 	private int locX = 1;
 	private int locY = 1;
 	
@@ -31,23 +30,24 @@ public class Paddle extends JComponent{
         resetState();
     }
 
-    
 	public void move(Frame f) {
 		f.addKeyListener(new KeyListener() {
 	        @Override
-	        public void keyPressed(KeyEvent e) {
+			public void keyPressed(KeyEvent e) 
+			{
 	        	int key = e.getKeyCode();
-
-	            if (key == KeyEvent.VK_LEFT) {
-	                dx = -1;
+				if (key == KeyEvent.VK_LEFT) 
+				{
+	               	dx = -1;
 	            }
-
-	            if (key == KeyEvent.VK_RIGHT) {
-	                dx = 1;
+				if (key == KeyEvent.VK_RIGHT) 
+				{
+	               	dx = 1;
 	            }
-	        	}
+	        }
 			@Override
-			public void keyReleased(KeyEvent b) {	
+			public void keyReleased(KeyEvent b) 
+			{	
 				int key = b.getKeyCode();
 
 		        if (key == KeyEvent.VK_LEFT) {
@@ -60,19 +60,18 @@ public class Paddle extends JComponent{
 			}
 			@Override
 			public void keyTyped(KeyEvent arg0) {				}	        
-
-
 	    });
        locX += dx * 25;
-       
-       
-        if (locX >= screenSize.getWidth() - paddleImg.getWidth()) {
+        
+		if (locX >= screenSize.getWidth() - paddleImg.getWidth()) 
+		{
         	locX = (int) (screenSize.getWidth() - paddleImg.getWidth());
         }
 		this.setBounds(locX, locY, paddleImg.getWidth(), paddleImg.getHeight());
-    }
-    public void keyPressed(KeyEvent e) {
-
+	}
+	
+	public void keyPressed(KeyEvent e) 
+	{
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
@@ -85,8 +84,8 @@ public class Paddle extends JComponent{
         }
     }
 
-    public void keyReleased(KeyEvent e) {
-
+	public void keyReleased(KeyEvent e) 
+	{
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
@@ -98,33 +97,39 @@ public class Paddle extends JComponent{
         }
     }
 
-    private void resetState() {
+	private void resetState() 
+	{
         locX = 500;
-        locY = 980;
-        
+        locY = 980;   
     }
 
-    public BufferedImage getPaddleImg() {
+	public BufferedImage getPaddleImg() 
+	{
 		return paddleImg;
 	}
 
-	public void setPaddleImg(BufferedImage paddleImg) {
+	public void setPaddleImg(BufferedImage paddleImg) 
+	{
 		this.paddleImg = paddleImg;
 	}
 
-	public int getLocX() {
+	public int getLocX() 
+	{
 		return locX;
 	}
 
-	public void setLocX(int locX) {
+	public void setLocX(int locX) 
+	{
 		this.locX = locX;
 	}
 
-	public int getLocY() {
+	public int getLocY() 
+	{
 		return locY;
 	}
 
-	public void setLocY(int locY) {
+	public void setLocY(int locY) 
+	{
 		this.locY = locY;
 	}
 }

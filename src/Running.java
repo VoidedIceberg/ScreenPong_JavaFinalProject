@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
@@ -13,10 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
- * Write a description of class Runing here.
+ * This is the main loop of the application that handels the screen updates
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Troy Mullenberg  
  */
 public class Running extends JPanel
 {
@@ -30,9 +30,7 @@ public class Running extends JPanel
     private JPanel panel;
     private Paddle paddle;
     private Block[] blockAray;
-    
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
+
     // sets the frame rate of the game
     public Running()
     {
@@ -82,12 +80,11 @@ public class Running extends JPanel
     			 @Override
                  public void paintComponent(Graphics g) {
                      super.paintComponent(g);
-                     Graphics2D g2d = (Graphics2D) g.create();
                  	for(int i = 0; i <= 7; i++)
                 	{
                  		if (blockAray[i].getDestroyed() == false)
                  		{
-                 		g.drawImage(blockAray[i].getImg(), blockAray[i].getLocationPoint().x, blockAray[i].getLocationPoint().y, blockAray[i].getImg().getWidth(),blockAray[i].getImg().getHeight(), this);
+                 		 g.drawImage(blockAray[i].getImg(), blockAray[i].getLocationPoint().x, blockAray[i].getLocationPoint().y, blockAray[i].getImg().getWidth(),blockAray[i].getImg().getHeight(), this);
                  		}
                 	}
                  	for (int i = 8; i <= 15; i++)
@@ -100,15 +97,16 @@ public class Running extends JPanel
     		};     
         frame.add(panel);
     		// gets the current screens resolution
-        	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gs = ge.getDefaultScreenDevice();
         
         // makes the window Full Screen
-        gs.setFullScreenWindow(frame);
+       gs.setFullScreenWindow(frame);
+       
         frame.validate();
         paddle.move(frame);
         checkCollision();
-            win();
+        win();
     }
 
 

@@ -1,14 +1,11 @@
 import java.awt.AWTException;
-import java.awt.Component;
-import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.swing.JFrame;
+
 
 /**
  * Write a description of class ScreenCap here.
@@ -21,6 +18,10 @@ public class ScreenCap
     public BufferedImage capScreen() throws AWTException
     {
         Robot robot = new Robot();
-        return robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth();
+        int height = gd.getDisplayMode().getHeight();
+
+        return robot.createScreenCapture(new Rectangle(new Dimension(width, height)));
     }
 }

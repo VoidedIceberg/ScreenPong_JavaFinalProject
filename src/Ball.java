@@ -1,7 +1,5 @@
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +14,7 @@ import javax.swing.JComponent;
  * @author T. Mullenberg 
  */
 public class Ball extends JComponent
-	{
+{
 		private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int ballSpeed;
 		BufferedImage  ballImg;
@@ -34,7 +32,8 @@ public class Ball extends JComponent
 		try {
 			ballImg = ImageIO.read(new File("images/BallImage.png"));
 		} catch (IOException e) { }
-			rect = new Rectangle();
+
+		rect = new Rectangle();
 	}
 
 	public void phisics()
@@ -53,6 +52,7 @@ public class Ball extends JComponent
 		rect.setBounds(locX, locY, ballImg.getWidth(), ballImg.getHeight());	
 		this.setBounds(rect);
 	}
+
 	public boolean isTouching()
 	{		
 		return false;
@@ -62,39 +62,49 @@ public class Ball extends JComponent
 	{
 		return ballImg;
 	}
+
 	public int getX()
 	{
 		return this.locX;
 	}
+
 	public int getY()
 	{
 		return this.locY;
 	}
-	public void setLocX(int locX) {
+
+	public void setLocX(int locX) 
+	{
 		this.locX = locX;
 	}
 
-	public void setLocY(int locY) {
+	public void setLocY(int locY) 
+	{
 		this.locY = locY;
 	}
 
-	public Rectangle getRect() {
+	public Rectangle getRect() 
+	{
 		return rect;
 	}
 
-	public int getDirectionX() {
+	public int getDirectionX() 
+	{
 		return directionX;
 	}
 
-	public void setDirectionX(int directionX) {
+	public void setDirectionX(int directionX) 
+	{
 		this.directionX = directionX;
 	}
 
-	public int getDirectionY() {
+	public int getDirectionY() 
+	{
 		return directionY;
 	}
 
-	public void setDirectionY(int directionY) {
+	public void setDirectionY(int directionY) 
+	{
 		this.directionY = directionY;
 	}
 }

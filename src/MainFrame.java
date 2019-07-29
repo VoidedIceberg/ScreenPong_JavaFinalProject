@@ -10,10 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 /**
- * Write a description of class MainFrame here.
+ *      Responsible for the initial play menu
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Troy Mullenberg 
  */
 public class MainFrame  
 {
@@ -42,8 +41,9 @@ public class MainFrame
         JButton btnStart = new JButton("Start!!!");
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                try{                  
-                       Running run = new Running();
+                try
+                {                  
+                    Running run = new Running();
                 } catch (Exception e) {
         			e.printStackTrace();
                 }
